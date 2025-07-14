@@ -2,166 +2,112 @@ import { render } from '@czechitas/render';
 import '../global.css';
 import './index.css';
 
+import { Banner } from '../components/Banner/banner';
+import { Contact } from '../components/Contact/contact';
+import { Footer } from '../components/Footer/footer';
+import { Gallery } from '../components/Gallery/gallery';
+import { Header } from '../components/Header/header';
+import { Menu } from '../components/Menu/menu';
+
+
+const response = await fetch('http://localhost:4000/api/drinks');
+const json = await response.json();
+const drinks = json.data;
+console.log(drinks);
+console.log(drinks[0]);
+
+/* 2 Komponenty
+Chceme dosáhnout toho, aby kód pro obsah hlavní stránky aplikace v index.jsx vypadal takto:
+
 document.querySelector('#root').innerHTML = render(
   <div className="page">
-    <header>
-      <div className="header__content container">
-        <div className="site-logo"></div>
-
-        <div className="navigation">
-          <button className="nav-btn"></button>
-          <nav className="rollout-nav nav-closed">
-            <a href="#home">domů</a>
-            <a href="#menu">menu</a>
-            <a href="#gallery">galerie</a>
-            <a href="#contact">kontakt</a>
-          </nav>
-        </div>
-
-      </div>
-    </header>
+    <Header />
     <main>
-      <section className="banner">
-        <div className="container">
-          <div className="banner__content">
-            <h1>Přijď to ochutnat!</h1>
-            <p>Nabízíme kvalitní kávu, útulné prostředí a perfektní servis.</p>
-          </div>
-        </div>
-      </section>
-      <section className="menu">
-        <div className="container">
-          <h2>Naše nabídka</h2>
-          <p className="menu-intro">
-            Vyberte si z našeho interaktivního menu a nemusíte čekat na obsluhu
-          </p>
-          <div className="drinks-list">
-            <div className="drink">
-              <div className="drink__product">
-                <div className="drink__cup">
-                  <img src="/cups/espresso.png" />
-                </div>
-                <div className="drink__info">
-                  <h3>Espresso</h3>
-                  <div className="layer">
-                    <div className="layer__color" style={{ backgroundColor: '#613916' }}></div>
-                    <div className="layer__label">espresso</div>
-                  </div>
-                </div>
-              </div>
-              <form className="drink__controls">
-                <input type="hidden" className="order-id" value="0" />
-                <button className="order-btn">
-                  Objednat
-                </button>
-              </form>
-            </div>
-
-            <div className="drink">
-              <div className="drink__product">
-                <div className="drink__cup">
-                  <img src="/cups/doppio.png" />
-                </div>
-                <div className="drink__info">
-                  <h3>Doppio</h3>
-                  <div className="layer">
-                    <div className="layer__color" style={{ backgroundColor: '#613916' }} />
-                    <div className="layer__label">espresso</div>
-                  </div>
-                </div>
-              </div>
-              <form className="drink__controls">
-                <input type="hidden" className="order-id" value="1" />
-                <button className="order-btn">
-                  Objednat
-                </button>
-              </form>
-            </div>
-
-            <div className="drink">
-              <div className="drink__product">
-                <div className="drink__cup">
-                  <img src="/cups/lungo.png" />
-                </div>
-                <div className="drink__info">
-                  <h3>Lungo</h3>
-                  <div className="layer">
-                    <div className="layer__color" style={{ backgroundColor: '#b0dee1' }} />
-                    <div className="layer__label">voda</div>
-                  </div>
-                  <div className="layer">
-                    <div className="layer__color" style={{ backgroundColor: '#613916' }} />
-                    <div className="layer__label">espresso</div>
-                  </div>
-                </div>
-              </div>
-              <form className="drink__controls">
-                <input type="hidden" className="order-id" value="2" />
-                <button className="order-btn">
-                  Objednat
-                </button>
-              </form>
-            </div>
-          </div>
-
-          <div className="order-detail">
-            <a href="/order.html">Detail objednávky</a>
-          </div>
-        </div>
-      </section>
-
-      <section className="gallery">
-        <div className="container">
-          <div className="gallery__content">
-            <h2>Nově otevřeno!</h2>
-            <div className="gallery__cols">
-              <p className="gallery__col">
-                Máte chuť na trochu nostalgie? Rádi vás u nás uvidíme. Atmosféra podniku Vás pohltí a přivede do
-                uvolněné nálady.
-              </p>
-              <p className="gallery__col">
-                V přízemí Cafe Lóra se nachází nově vystavěný bar a restaurant, kde Vám nabízíme koktejly z nově
-                navržené řady "Cocktails &amp; Desires". V suterénu najdete music club se světelnou disco podlahou,
-                barem, VIP loungem, a hrají tam ti nejlepší DJ's!
-              </p>
-              <p className="gallery__col">
-                Jsme podnik pro všechny generace. Součástí kavárny je dětský koutek, který zabaví vaše ratolesti
-                abyste si mohli v klidu vychutnat šálek Vaší oblíbené kávy.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <div className="container">
-          <h2>Kde nás najdete</h2>
-          <div className="contact">
-            <div className="contact__address">
-              Na Mýtě 240 <br />
-              514 03 Byšky nad Jizerou <br />
-              Tel: +420 775 334 427
-            </div>
-            <table className="contact__hours">
-              <tr><td>Pondělí</td><td>ZAVŘENO</td></tr>
-              <tr><td>Úterý</td><td>11:00 - 22:00</td></tr>
-              <tr><td>Středa</td><td>11:00 - 22:00</td></tr>
-              <tr><td>Čtvrtek</td><td>11:00 - 22:00</td></tr>
-              <tr><td>Sobota</td><td>9:00 - 02:00</td></tr>
-              <tr><td>Neděle</td><td>9:00 - 02:00</td></tr>
-            </table>
-            <iframe src="https://mapy.cz/s/paloregama" width="100%" height="600" frameBorder="0" title="Café Lóra na mapě."></iframe>
-          </div>
-        </div>
-      </section>
+      <Banner />
+      <Menu />
+      <Gallery />
+      <Contact />
     </main>
-
-    <footer>
-      <div className="container">
-        <div className="footer__content">
-          Café Lóra je tréningový projekt v rámci Czechitas kurzu JavaScript 2
-        </div>
-      </div>
-    </footer>
+    <Footer />
   </div>
 );
+*/
+
+document.querySelector('#root').innerHTML = render(
+  <div className="page">
+    <Header showMenu={true} />
+    <main>
+      <Banner />
+      <Menu drinks={drinks}/>
+      <Gallery />
+      <Contact />      
+    </main> 
+    <Footer />
+  </div>
+);
+
+/*
+3 Zprovoznění navigace
+Rozchoďte navigaci, aby fungovala i na úzkých displejích.
+*/
+
+const navBtn = document.querySelector(".nav-btn")
+const rolloutNav = document.querySelector(".rollout-nav")
+
+navBtn.addEventListener("click", () => {
+  rolloutNav.classList.toggle("nav-closed")
+})
+
+
+rolloutNav.addEventListener("click", () => {
+  rolloutNav.classList.add("nav-closed")
+})
+
+const handleOrder = async (event) => {
+  event.preventDefault();
+  const btnId = Number(event.target.dataset.id); 
+  console.log(btnId);
+  console.log(event.target.dataset)
+
+// Bonus:
+  const actualOrder = drinks.find((drink) => drink.id === btnId);
+  console.log(actualOrder.ordered);
+  const changeOrderStatusTo = actualOrder.ordered ? false : true
+
+const response = await fetch(`http://localhost:4000/api/drinks/${btnId}`, {
+  method: "PATCH",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify( [{ op: 'replace', path: '/ordered', value: changeOrderStatusTo }]),
+  })
+
+if (!response.ok) {
+  alert("Jejda, něco se pokazilo...");
+} else {
+  console.log(`Dobrá zpráva, změna objednávky ${btnId} se podařila!`)
+  window.location.reload();
+}}
+
+const drinkControls = document.querySelectorAll(".drink__controls")
+drinkControls.forEach( (btn) => {
+  btn.addEventListener('submit', handleOrder)
+});
+
+
+
+/* 2 Komponenty
+Rozsekejte hlavní stránku na komponenty.
+
+Složka components a v ní komponenty pro hlavní stránku (JSX i CSS tak, aby každá komponenta měla vlastní styly i obrázky). 
+Globální styly v souboru global.css beze změny. 
+
+Styly komponent hlavní stránky v index.css. Soubor je strukturovaný tak, aby styly pro jednotlivé komponenty byly seskupené u sebe, 
+nemusíte tak zoufale lovit styly po celém projektu. 
+
+V souboru order.css jsou styly pro detail objednávky - ty zatím neřešte, detailem se budete zabývat až v druhé části projektu.
+*/
+
+// druhý projekt k API 
+// zkontrolovat, že je všude opravdeno na locahost:4000 !!!
+// npx apidroid@latest
